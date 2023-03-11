@@ -3,40 +3,29 @@
 
 ;;(import clojure.string/lower-case)
 
-(def abilities-ns "abilities")
-(def conditions-ns "conditions")
-(def ancestry-entries-ns "ancestry-entries")
-(def ancestry-ns "ancestries")
-(def background-ns "backgrounds")
-(def language-ns "languages")
-(def character-classes-ns "character-classes")
-(def skills-ns "skills")
-(def feats-ns "feats")
-
-
 (defn key-name [str] (str/replace str #"\s+" "_"))
 
 ;; Someday, the functions that follow this macro will be more specialized. For now, they
 ;; are all the same. As long as they remain the same, I'd rather have clojure write them
 ;; for me... instead of having to do that work myself.
 (defmacro key-name-map
-  [name element-ns]
+  [name]
   `(defn ~name [name#]
      {
-      :key  (keyword ~element-ns (key-name name#))
+      :key  (keyword (key-name name#))
       :name name#
-      :type (keyword "types" (name '~name))
+      :type (keyword (name '~name))
       }))
 
-(key-name-map ability abilities-ns)
-(key-name-map condition conditions-ns)
-(key-name-map ancestry-entry ancestry-entries-ns)
-(key-name-map ancestry ancestry-ns)
-(key-name-map background background-ns)
-(key-name-map language language-ns)
-(key-name-map character-class character-classes-ns)
-(key-name-map skill skills-ns)
-(key-name-map feat feats-ns)
+(key-name-map ability)
+(key-name-map condition)
+(key-name-map ancestry-entry)
+(key-name-map ancestry)
+(key-name-map background)
+(key-name-map language)
+(key-name-map character-class)
+(key-name-map skill)
+(key-name-map feat)
 
 (defn get-item
   "Find Map in [set] whose :key field is :[namespace]/(name [:key])"
