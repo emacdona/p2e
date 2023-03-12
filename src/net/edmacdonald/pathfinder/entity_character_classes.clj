@@ -1,0 +1,16 @@
+(in-ns 'net.edmacdonald.pathfinder.entities)
+
+(key-name-map character-class)
+
+(def character-classes #{(character-class "alchemist")
+                         (character-class "barbarian")
+                         (character-class "bard")
+                         (character-class "champion")
+                         (character-class "cleric")
+                         (character-class "druid")
+                         (character-class "fighter")
+                         (character-class "monk")
+                         (character-class "ranger")
+                         (character-class "rogue")
+                         (character-class "sorcerer")
+                         (character-class "wizard")})
