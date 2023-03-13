@@ -16,6 +16,12 @@
       :type (keyword (name '~name))
       }))
 
+(defn merge-meta
+  [merge-target keyed-meta meta-key-name]
+  (map
+    (fn [x] (assoc x meta-key-name (keyed-meta (x :key))))
+    merge-target))
+
 (defn to-map
   "Give a set of keyed entities (ie: each has a :key), create a mapping of :key's to entity"
   [set key]
