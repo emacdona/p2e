@@ -2,7 +2,8 @@
   (:require [clojure.string :as str]))
 
 
-(defn- key-name [str] (str/replace str #"\s+" "_"))
+(def entity-types (atom #{}))
+(def all-entities (atom {}))
 
 ;; Someday, the functions that follow this macro will be more specialized. For now, they
 ;; are all the same. As long as they remain the same, I'd rather have clojure write them
@@ -10,11 +11,18 @@
 (defmacro key-name-map
   [name]
   `(defn ~name [name#]
-     {
-      :key  (keyword (key-name name#))
-      :name name#
-      :type (keyword (name '~name))
-      }))
+     (let [key# (keyword (#(str/replace % #"\s+" "_")
+                           name#))
+           type# (keyword (name '~name))
+           entity# {:key  key#
+                    :name name#
+                    :type type#}]
+       ;; keep track of entity types we're creating
+       (swap! entity-types #(conj % type#))
+       (swap! all-entities #(assoc %1 type#
+                                      (conj (%1 type#)
+                                            entity#)))
+       entity#)))
 
 (defn merge-meta
   [merge-target keyed-meta meta-key-name]
