@@ -48,6 +48,7 @@
 
 (def character-classes-decorated
   (-> character-classes
-      (merge-meta key-ability-options :key-ability-options)
-      (merge-meta hit-points-base :hit-points-base)
-      ))
+      (character-class-decorate key-ability-options :key-ability-options)
+      (character-class-decorate hit-points-base :hit-points-base)
+      )
+  )

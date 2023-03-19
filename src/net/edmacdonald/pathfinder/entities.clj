@@ -10,19 +10,26 @@
 ;; for me... instead of having to do that work myself.
 (defmacro key-name-map
   [name]
-  `(defn ~name [name#]
-     (let [key# (keyword (#(str/replace % #"\s+" "_")
-                           name#))
-           type# (keyword (name '~name))
-           entity# {:key  key#
-                    :name name#
-                    :type type#}]
-       ;; keep track of entity types we're creating
-       (swap! entity-types #(conj % type#))
-       (swap! all-entities #(assoc %1 type#
-                                      (conj (%1 type#)
-                                            entity#)))
-       entity#)))
+  `(let [type# (keyword (name '~name))]
+     (defn ~name [name#]
+       (let [key# (keyword (#(str/replace % #"\s+" "_")
+                             name#))
+             entity# {:key  key#
+                      :name name#
+                      :type type#}]
+
+         ;; keep track of entity types we're creating
+         (swap! entity-types #(conj % type#))
+         (swap! all-entities #(assoc % type#
+                                        (conj (% type#)
+                                              entity#)))
+         entity#))
+     (defn ~(symbol (str name "-decorate"))
+       [entities# metadata-map# new-key#]
+       (let [new-entities# (merge-meta entities# metadata-map# new-key#)]
+         (swap! all-entities
+                #(assoc % type# new-entities#))
+         new-entities#))))
 
 (defn merge-meta
   [merge-target keyed-meta meta-key-name]
