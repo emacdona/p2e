@@ -26,7 +26,7 @@
                           :fighter   [:strength :dexterity]
                           :monk      [:strength :dexterity]
                           :ranger    [:strength :dexterity]
-                          :rogue     [:dexterity :other]
+                          :rogue     [:dexterity :any]
                           :sorcerer  [:charisma]
                           :wizard    [:intelligence]
                           })
