@@ -1,5 +1,6 @@
 (ns net.edmacdonald.pathfinder.entities
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [com.rpl.specter :as sp]))
 
 
 (def entity-types (atom #{}))
@@ -21,8 +22,8 @@
          ;; keep track of entity types we're creating
          (swap! entity-types #(conj % type#))
          (swap! all-entities #(assoc % type#
-                                        (conj (% type#)
-                                              entity#)))
+                                       (conj (% type#)
+                                             entity#)))
          entity#))
      (defn ~(symbol (str name "-decorate"))
        [entities# metadata-map# new-key#]
