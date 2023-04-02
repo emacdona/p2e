@@ -1,6 +1,6 @@
 (in-ns 'net.edmacdonald.pathfinder.entities)
 
-(key-name-map character-class)
+(entity-type character-class)
 
 (def character-classes #{(character-class "alchemist")
                          (character-class "barbarian")

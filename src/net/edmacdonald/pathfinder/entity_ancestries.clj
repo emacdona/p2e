@@ -1,6 +1,6 @@
 (in-ns 'net.edmacdonald.pathfinder.entities)
 
-(key-name-map ancestry)
+(entity-type ancestry)
 
 (def ancestries #{(ancestry "dwarf")
                   (ancestry "elf")

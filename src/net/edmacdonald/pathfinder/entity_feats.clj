@@ -1,6 +1,6 @@
 (in-ns 'net.edmacdonald.pathfinder.entities)
 
-(key-name-map feat)
+(entity-type feat)
 
 (def feats #{(feat "adopted ancestry")
              (feat "armor proficiency")
@@ -120,3 +120,18 @@
              (feat "quick unlock")
              (feat "legendary thief")
              })
+
+(def feat-type {
+
+                 })
+
+(def feat-theme{
+
+                })
+
+(def feats-decorated
+  (-> character-classes
+      (feat-decorate feat-type :feat-type)
+      (feat-decorate feat-theme :theme)
+      )
+  )

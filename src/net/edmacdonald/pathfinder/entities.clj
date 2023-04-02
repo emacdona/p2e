@@ -10,10 +10,10 @@
   (reset! entity-types #{})
   (reset! all-entities {}))
 
-;; Someday, the functions that follow this macro will be more specialized. For now, they
-;; are all the same. As long as they remain the same, I'd rather have clojure write them
-;; for me... instead of having to do that work myself.
-(defmacro key-name-map
+;; A macro that defines functions that
+;; 1. Create new entities of a given type, and record them in the global entity database
+;; 2. Decorate a collection of entities with additional metadata.
+(defmacro entity-type
   [entity-type]
   `(let [type# (keyword (name '~entity-type))]
      (defn ~entity-type [name#]
@@ -31,7 +31,7 @@
          entity#))
      (defn ~(symbol (str entity-type "-decorate"))
        [entities# metadata-map# new-key#]
-       (let [new-entities# (merge-meta entities# metadata-map# new-key#)]
+       (let [new-entities# (into-maps entities# metadata-map# new-key#)]
          (swap! all-entities
                 #(assoc % type#
                           (reduce (fn [x# y#]
@@ -42,11 +42,15 @@
          new-entities#))
      ))
 
-(defn merge-meta
-  [merge-target keyed-meta meta-key-name]
-  (map
-    #(assoc % meta-key-name (keyed-meta (% :key)))
-    merge-target))
+(defn into-maps
+  "Given a sequence of Destination Maps (dest-maps), for each one, add a new key-value pair -- with
+  key = dest-key; value = (keyed-source-data (destination-map :dest-id-key))"
+  ( [dest-maps keyed-source-data dest-key]
+   (into-maps dest-maps keyed-source-data dest-key :key))
+  ( [dest-maps keyed-source-data dest-key dest-id-key]
+   (map
+     #(assoc % dest-key (keyed-source-data (% dest-id-key)))
+     dest-maps)))
 
 (defn to-map
   "Give a set of keyed entities (ie: each has a :key), create a mapping of :key's to entity"

@@ -1,6 +1,6 @@
 (in-ns 'net.edmacdonald.pathfinder.entities)
 
-(key-name-map skill)
+(entity-type skill)
 
 (def skills #{(skill "acrobatics")
               (skill "arcana")

@@ -1,6 +1,6 @@
 (in-ns 'net.edmacdonald.pathfinder.entities)
 
-(key-name-map ability)
+(entity-type ability)
 
 (def abilities #{(ability "strength")
                  (ability "dexterity")

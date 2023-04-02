@@ -1,6 +1,6 @@
 (in-ns 'net.edmacdonald.pathfinder.entities)
 
-(key-name-map ancestry-entry)
+(entity-type ancestry-entry)
 
 (def ancestry-entries #{(ancestry-entry "hit points")
                         (ancestry-entry "size")

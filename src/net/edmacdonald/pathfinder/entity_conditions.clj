@@ -1,6 +1,6 @@
 (in-ns 'net.edmacdonald.pathfinder.entities)
 
-(key-name-map condition)
+(entity-type condition)
 
 (def conditions #{(condition "blinded")
                   (condition "broken")
