@@ -16,8 +16,7 @@
                          (character-class "wizard")})
 
 
-(def key-ability-options {
-                          :alchemist [:intelligence]
+(def key-ability-options {:alchemist [:intelligence]
                           :barbarian [:strength]
                           :bard      [:charisma]
                           :champion  [:strength :dexterity]
@@ -31,8 +30,7 @@
                           :wizard    [:intelligence]
                           })
 
-(def hit-points-base {
-                      :alchemist 8
+(def hit-points-base {:alchemist 8
                       :barbarian 12
                       :bard      8
                       :champion  10
