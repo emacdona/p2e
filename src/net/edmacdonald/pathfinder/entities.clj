@@ -1,6 +1,6 @@
 (ns net.edmacdonald.pathfinder.entities
   (:require [clojure.string :as str]
-            [com.rpl.specter :as sp]))
+            [com.rpl.specter :as s]))
 
 
 (def entity-types (atom #{}))
@@ -34,20 +34,17 @@
        (let [new-entities# (into-maps entities# metadata-map# new-key#)]
          (swap! all-entities
                 #(assoc % type#
-                          (reduce (fn [x# y#]
-                                    (assoc x# (:key y#) y#))
-                                  {}
-                                  new-entities#)
-                          ))
+                          (into {}
+                                (s/transform [s/ALL] (fn [x#] {(x# :key) x#}) new-entities#))))
          new-entities#))
      ))
 
 (defn into-maps
   "Given a sequence of Destination Maps (dest-maps), for each one, add a new key-value pair -- with
   key = dest-key; value = (keyed-source-data (destination-map :dest-id-key))"
-  ( [dest-maps keyed-source-data dest-key]
+  ([dest-maps keyed-source-data dest-key]
    (into-maps dest-maps keyed-source-data dest-key :key))
-  ( [dest-maps keyed-source-data dest-key dest-id-key]
+  ([dest-maps keyed-source-data dest-key dest-id-key]
    (map
      #(assoc % dest-key (keyed-source-data (% dest-id-key)))
      dest-maps)))

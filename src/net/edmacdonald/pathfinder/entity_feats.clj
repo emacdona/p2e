@@ -130,7 +130,7 @@
                 })
 
 (def feats-decorated
-  (-> character-classes
+  (-> feats
       (feat-decorate feat-type :feat-type)
       (feat-decorate feat-theme :theme)
       )
