@@ -16,19 +16,23 @@
 (defmacro entity-type
   [entity-type]
   `(let [type# (keyword (name '~entity-type))]
-     (defn ~entity-type [name#]
-       (let [key# (keyword (#(str/replace % #"\s+" "_")
-                             name#))
-             entity# {:key  key#
-                      :name name#
-                      :type type#}]
+     (defn ~entity-type
+       ([name#]
+        (~entity-type name# {}))
+       ([name# extra-attributes-map#]
+        (let [key# (keyword (#(str/replace % #"\s+" "_")
+                              name#))
+              entity# (into {:key  key#
+                             :name name#
+                             :type type#}
+                            extra-attributes-map#)]
 
-         ;; keep track of entity types we're creating
-         (swap! entity-types #(conj % type#))
-         (swap! all-entities #(assoc % type#
-                                       (assoc (% type#)
-                                         (entity# :key) entity#)))
-         entity#))
+          ;; keep track of entity types we're creating
+          (swap! entity-types #(conj % type#))
+          (swap! all-entities #(assoc % type#
+                                        (assoc (% type#) (entity# :key) entity#)))
+          entity#))
+       )
      (defn ~(symbol (str entity-type "-decorate"))
        [entities# metadata-map# new-key#]
        (let [new-entities# (into-maps entities# metadata-map# new-key#)]
