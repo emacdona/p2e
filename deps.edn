@@ -1,0 +1,16 @@
+{:deps    {
+           org.clojure/clojure {:mvn/version "1.11.1"}
+           com.rpl/specter     {:mvn/version "1.1.4"}
+           }
+ :aliases {
+           ;; Java FX required, and apparently JDK's don't necessarily ship with it?!
+           ;; But, liberica jdk does.
+           ;; https://stackoverflow.com/questions/53467499/javafx-os-x-graphics-device-initialization-failed-for-es2-sw
+           ;; https://openjfx.io/openjfx-docs/#install-javafx
+           ;; https://sdkman.io/jdks
+           ;; https://whichjdk.com/
+           
+           :dev {
+                 :extra-deps {io.github.nubank/morse {:git/tag "v2023.04.27.01" :git/sha "7a85e46"}}
+                 }
+           }}
